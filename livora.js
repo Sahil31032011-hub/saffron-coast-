@@ -22,21 +22,36 @@ function makeAvatar(){const group=new THREE.Group();const skin=mat(avatar==='urb
 const pedestrians=[];
 const pedestrianPalette=['#e46f5c','#4d80aa','#d2a34e','#7b68a8','#4e987b','#d0d4dc','#c46b91','#60717d'];
 function makePedestrian(index){
- const g=new THREE.Group(),skin=mat(['#c98762','#e0b18b','#9a654a','#d49a7d'][index%4]),shirt=mat(pedestrianPalette[index%pedestrianPalette.length]),pants=mat(['#27364b','#39434a','#4b3b35','#303b54'][index%4]),shoe=mat('#202832');
- const torso=box(g,.68,.92,.38,shirt,0,1.35,0);
- const head=new THREE.Mesh(new THREE.SphereGeometry(.23,12,10),skin);head.position.y=2.02;head.castShadow=true;g.add(head);
- const hair=mat(['#29232a','#493329','#20252c','#72503b'][index%4]);
- const cap=new THREE.Mesh(new THREE.SphereGeometry(.235,12,8,0,Math.PI*2,0,Math.PI*.6),hair);cap.position.y=2.09;g.add(cap);
+ const g=new THREE.Group(),skin=mat(['#c98762','#e0b18b','#9a654a','#d49a7d','#b87958'][index%5]),shirt=mat(pedestrianPalette[index%pedestrianPalette.length]),pants=mat(['#27364b','#39434a','#4b3b35','#303b54','#59616b'][index%5]),shoe=mat('#202832'),hair=mat(['#29232a','#493329','#20252c','#72503b','#302b28'][index%5]);
+ const limb=(rt,rb,len,material,x,y,z)=>{const m=new THREE.Mesh(new THREE.CylinderGeometry(rt,rb,len,10),material);m.position.set(x,y-len/2,z);m.castShadow=true;g.add(m);return m;};
+ const torso=new THREE.Mesh(new THREE.CapsuleGeometry(.29,.48,4,8),shirt);torso.position.set(0,1.28,0);torso.scale.set(1,.95,.72);torso.castShadow=true;g.add(torso);
+ const neck=new THREE.Mesh(new THREE.CylinderGeometry(.095,.11,.17,10),skin);neck.position.y=1.68;g.add(neck);
+ const head=new THREE.Mesh(new THREE.SphereGeometry(.235,16,14),skin);head.position.y=1.94;head.scale.set(.88,1.12,.9);head.castShadow=true;g.add(head);
+ const cap=new THREE.Mesh(new THREE.SphereGeometry(.241,16,10,0,Math.PI*2,0,Math.PI*.57),hair);cap.position.set(0,2.055,-.012);g.add(cap);
+ for(const side of [-1,1]){
+  const lock=new THREE.Mesh(new THREE.SphereGeometry(.075,9,8),hair);lock.position.set(side*.19,1.99,-.005);lock.scale.set(.8,1.4,.85);g.add(lock);
+  const ear=new THREE.Mesh(new THREE.SphereGeometry(.045,8,8),skin);ear.position.set(side*.205,1.94,0);g.add(ear);
+  const eye=new THREE.Mesh(new THREE.SphereGeometry(.035,8,8),mat('#f5eee4'));eye.position.set(side*.082,1.97,.194);g.add(eye);
+  const pupil=new THREE.Mesh(new THREE.SphereGeometry(.016,8,8),mat('#29252a'));pupil.position.set(side*.082,1.968,.224);g.add(pupil);
+  box(g,.075,.018,.025,hair,side*.082,2.025,.198);
+ }
+ const nose=new THREE.Mesh(new THREE.SphereGeometry(.035,8,8),skin);nose.position.set(0,1.92,.222);nose.scale.set(.8,1,1.2);g.add(nose);
+ box(g,.075,.012,.018,mat('#704b46'),0,1.865,.211);
+ const collar=new THREE.Mesh(new THREE.TorusGeometry(.105,.025,6,12),mat('#e8e2d8'));collar.position.set(0,1.59,.015);collar.rotation.x=Math.PI/2;g.add(collar);
  const limbs=[];
  for(const side of [-1,1]){
-  const arm=box(g,.19,.72,.2,skin,side*.43,1.38,0);arm.geometry.translate(0,-.32,0);limbs.push(arm);
-  const leg=box(g,.23,.72,.25,pants,side*.18,.55,0);leg.geometry.translate(0,-.32,0);limbs.push(leg);
-  box(g,.25,.13,.38,shoe,side*.18,.12,.05);
+  const shoulder=new THREE.Mesh(new THREE.SphereGeometry(.14,10,8),shirt);shoulder.position.set(side*.31,1.48,0);g.add(shoulder);
+  limbs.push(limb(.105,.085,.43,shirt,side*.36,1.48,0));
+  limbs.push(limb(.075,.06,.34,skin,side*.36,1.05,0));
+  const hand=new THREE.Mesh(new THREE.SphereGeometry(.075,8,8),skin);hand.position.set(side*.36,.85,0);g.add(hand);
+  limbs.push(limb(.13,.105,.52,pants,side*.145,.79,0));
+  limbs.push(limb(.095,.075,.43,pants,side*.145,.4,0));
+  box(g,.22,.13,.38,shoe,side*.145,.13,.07);
  }
- g.traverse(o=>{if(o.isMesh)o.castShadow=true;});
+ if(index%4===0){box(g,.36,.43,.14,mat('#4b5962'),0,1.32,-.22);box(g,.07,.42,.035,mat('#d3ad67'),-.16,1.34,-.12);box(g,.07,.42,.035,mat('#d3ad67'),.16,1.34,-.12);}
+ g.traverse(o=>{if(o.isMesh){o.castShadow=true;o.receiveShadow=true;}});
  scene.add(g);
- const route=[new THREE.Vector3(13,0,-48),new THREE.Vector3(13,0,48),new THREE.Vector3(-13,0,48),new THREE.Vector3(-13,0,-48)];
- const offset=(index*7)%route.length;
+ const route=[new THREE.Vector3(13,0,-48),new THREE.Vector3(13,0,48),new THREE.Vector3(-13,0,48),new THREE.Vector3(-13,0,-48)],offset=(index*7)%route.length;
  g.position.copy(route[offset]).add(new THREE.Vector3(0,0,(index%5)*5));
  pedestrians.push({group:g,limbs,route,index,target:(offset+1)%route.length,speed:1.1+(index%5)*.16,phase:index*.7});
 }
@@ -46,8 +61,8 @@ function updatePedestrians(dt){
   const target=npc.route[npc.target],g=npc.group,dx=target.x-g.position.x,dz=target.z-g.position.z,dist=Math.hypot(dx,dz);
   if(dist<1.5){npc.target=(npc.target+1)%npc.route.length;continue;}
   const step=Math.min(dist,npc.speed*dt);g.position.x+=dx/dist*step;g.position.z+=dz/dist*step;g.rotation.y=Math.atan2(dx,dz);
-  npc.phase+=dt*7;const swing=Math.sin(npc.phase)*.48;
-  npc.limbs[0].rotation.x=swing;npc.limbs[1].rotation.x=-swing;npc.limbs[2].rotation.x=-swing;npc.limbs[3].rotation.x=swing;
+  npc.phase+=dt*7;const swing=Math.sin(npc.phase)*.42;
+  npc.limbs[0].rotation.x=swing;npc.limbs[1].rotation.x=swing*.65;npc.limbs[2].rotation.x=-swing;npc.limbs[3].rotation.x=-swing*.65;
  }
 }
 
