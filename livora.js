@@ -1,5 +1,9 @@
 import * as THREE from 'three';
 
+// Detect touch hardware directly: many Android tablets report a desktop-sized viewport.
+const hasTouchControls = (navigator.maxTouchPoints || 0) > 0 || /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+document.documentElement.classList.toggle('touch-device', hasTouchControls);
+
 const $=id=>document.getElementById(id);
 const ui={intro:$('intro'),setup:$('setup'),pause:$('pause'),hud:$('hud'),loading:$('loading'),name:$('playerName'),money:$('money'),energy:$('energyBar'),hunger:$('hungerBar'),location:$('locationName'),objective:$('objectiveText'),interaction:$('interaction'),interactionText:$('interactionText'),toast:$('toast')};
 const SAVE_KEY='livora-save-v1';
