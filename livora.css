@@ -52,3 +52,27 @@
 @media (pointer:fine) and (min-width:701px){
   #mobileControls{display:none!important}
 }
+
+/* Hardware-based override: Android tablets may have desktop-sized CSS viewports. */
+html.touch-device #mobileControls:not(.hidden){
+  display:flex!important;
+  position:absolute!important;
+  z-index:99999!important;
+  left:14px!important;
+  right:14px!important;
+  bottom:calc(env(safe-area-inset-bottom, 0px) + 22px)!important;
+  visibility:visible!important;
+  opacity:1!important;
+}
+html.touch-device #mobileControls .stick{
+  width:132px!important;height:132px!important;flex-basis:132px!important;
+  background:rgba(10,20,35,.78)!important;border:3px solid #70f0ca!important;
+}
+html.touch-device #mobileControls .stick-knob{left:40px!important;top:40px!important;width:48px!important;height:48px!important;background:#70f0ca!important}
+html.touch-device #mobileControls .mobile-actions{display:grid!important;grid-template-columns:repeat(2,76px)!important;gap:10px!important}
+html.touch-device #mobileControls .mobile-actions button{
+  display:block!important;width:76px!important;height:64px!important;
+  background:#101d30!important;color:#fff!important;border:2px solid #70f0ca!important;
+  font-size:12px!important;opacity:1!important;visibility:visible!important;
+}
+html.touch-device #mobileControls.hidden{display:none!important}
