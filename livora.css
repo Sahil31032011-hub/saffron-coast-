@@ -16,3 +16,19 @@
   .location-card{top:65px}
   .objective{top:125px}
 }
+
+/* Reliable touch controls: keep the control layer above the game canvas. */
+.mobile-controls{z-index:30;isolation:isolate;pointer-events:none}
+.mobile-controls .stick,.mobile-controls .mobile-actions,.mobile-controls button{pointer-events:auto}
+.mobile-controls .stick{touch-action:none;-webkit-user-select:none;user-select:none}
+.mobile-controls .stick-knob{pointer-events:none;will-change:transform}
+.mobile-actions button{touch-action:none;-webkit-user-select:none;user-select:none}
+#world{touch-action:none}
+@media(max-width:700px){
+ .mobile-controls{bottom:max(78px,calc(env(safe-area-inset-bottom) + 70px));left:12px;right:12px}
+ .stick{width:124px;height:124px}
+ .stick-knob{left:38px;top:38px}
+ .mobile-actions{grid-template-columns:repeat(2,minmax(54px,62px));gap:9px}
+ .mobile-actions button{min-height:54px;font-size:12px}
+ .hud-bottom{bottom:max(8px,env(safe-area-inset-bottom))}
+}
