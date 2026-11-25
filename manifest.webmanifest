@@ -1,13 +1,13 @@
 {
-  "name": "Saffron Coast",
-  "short_name": "Saffron Coast",
-  "description": "An open-city driving game. Built by Sahil.",
+  "name": "LIVORA — Live Your Virtual Life",
+  "short_name": "LIVORA",
+  "description": "A 3D open-world life simulator. Built by Sahil.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
   "orientation": "landscape",
-  "background_color": "#0d111c",
-  "theme_color": "#0d111c",
+  "background_color": "#101827",
+  "theme_color": "#101827",
   "icons": [
     {"src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable"},
     {"src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable"}
