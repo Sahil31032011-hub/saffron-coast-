@@ -32,3 +32,13 @@
  .mobile-actions button{min-height:54px;font-size:12px}
  .hud-bottom{bottom:max(8px,env(safe-area-inset-bottom))}
 }
+
+/* Explicit mobile HUD overlay, outside the desktop HUD container. */
+#mobileControls{display:flex!important;position:absolute;z-index:100;left:12px;right:12px;bottom:calc(env(safe-area-inset-bottom,0px) + 76px);align-items:flex-end;justify-content:space-between;pointer-events:none}
+#mobileControls .stick{display:block;flex:0 0 124px;width:124px;height:124px;pointer-events:auto;touch-action:none}
+#mobileControls .stick-knob{left:38px;top:38px}
+#mobileControls .mobile-actions{display:grid;grid-template-columns:repeat(2,68px);gap:10px;pointer-events:auto}
+#mobileControls .mobile-actions button{display:block;width:68px;height:58px;min-width:68px;min-height:58px;border:2px solid #70f0ca;background:#101d30f2;color:#fff;border-radius:14px;font-size:11px;font-weight:900;box-shadow:0 4px 14px #0009;touch-action:none;pointer-events:auto}
+#mobileControls .mobile-actions button:active{background:#70f0ca;color:#10251f}
+@media(min-width:701px){#mobileControls{display:none!important}}
+@media(max-width:700px){#mobileControls{bottom:calc(env(safe-area-inset-bottom,0px) + 84px)}}
