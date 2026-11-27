@@ -27,6 +27,10 @@ Open the GitHub Pages site after Pages finishes deploying. Use a modern browser 
 - Local autosave of player name, avatar, wallet and location
 - Animated LIVORA welcome and player setup screens
 
+## Saffron Coast — CrazyGames build
+
+A standalone Saffron Coast HTML5 build is available in [`saffron-coast/`](./saffron-coast/). Its entry point is [`saffron-coast/index.html`](./saffron-coast/index.html). This keeps the driving game separate from the LIVORA project at the repository root. See the folder README for controls, SDK integration and the manual CrazyGames QA checklist.
+
 ## Legacy build
 The previous Saffron Coast driving game is preserved at [classic.html](./classic.html).
 
