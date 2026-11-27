@@ -1,41 +1,69 @@
-# LIVORA — Live Your Virtual Life
+# Saffron Coast
 
-**BUILT BY SAHIL**
+**A browser-based open-world driving game**
 
-LIVORA is a browser-based 3D open-world life simulator built with HTML, CSS and JavaScript. The project uses Three.js as a JavaScript 3D rendering library from a CDN; no game engine or build step is required.
+Saffron Coast is a driving game that runs in a modern web browser. Explore the city, drive vehicles, follow missions, and use the in-game map and garage.
 
 ## Play
-Open the GitHub Pages site after Pages finishes deploying. Use a modern browser with WebGL enabled and an internet connection for the Three.js CDN.
+
+Open the game through the project's GitHub Pages deployment, when enabled. You can also run it locally with a static HTTP server.
+
+> The game needs a modern browser with WebGL support. An internet connection may be required for externally hosted assets and libraries.
 
 ## Controls
-- **WASD / Arrow keys:** Move and steer
-- **Shift:** Sprint / faster driving
-- **Space:** Jump
-- **E:** Interact with nearby home, market, job or vehicle
-- **F:** Enter or exit your car
-- **Esc:** Pause
-- **Mobile:** Use the on-screen joystick and action buttons
 
-## Phase 1 currently implemented
-- 3D city scene with roads, buildings, trees, distant hills, lighting and fog
-- Controllable third-person avatar with two selectable avatar styles
-- Walking, sprinting and jumping
-- Drivable starter car with steering and acceleration
-- Home, market and job interaction points
-- Virtual wallet, simple grocery purchase and paid shift
-- Responsive touch controls
-- Local autosave of player name, avatar, wallet and location
-- Animated LIVORA welcome and player setup screens
+The exact available actions can vary by device and the current game screen.
 
-## Legacy build
-The previous Saffron Coast driving game is preserved at [classic.html](./classic.html).
+| Action | Control |
+|---|---|
+| Move / drive | **WASD** or **Arrow keys** |
+| Pause / menus | Use the in-game menu controls |
+| Mobile | Use the on-screen touch controls |
+
+Check the in-game help screen for the complete control list.
+
+## Game features
+
+- Open city environment to explore
+- Drivable vehicles
+- Garage and vehicle options
+- Missions and objectives
+- Traffic and police systems
+- In-game map and minimap
+- Vehicle progression and upgrades
+- Keyboard and mobile touch controls
+- Browser-based progress saving
 
 ## Run locally
-Serve this folder with any static HTTP server (ES modules require HTTP):
-- VS Code Live Server, or
-- `python -m http.server 8000` (only as a local static server; game code remains HTML/CSS/JS)
 
-Then open `http://localhost:8000`.
+1. Download or clone this repository.
+2. Open a terminal in the project folder.
+3. Start a local static server:
 
-## Roadmap
-This is the first playable 3D foundation. Interior buildings, detailed character rigs, supermarket checkout, expanded jobs, traffic AI, property ownership, weather and richer save slots are future phases. The current prototype should not be mistaken for the complete AAA-scale vision.
+   ```bash
+   python -m http.server 8000
+   ```
+
+4. Open [http://localhost:8000](http://localhost:8000) in your browser.
+
+You can also use the Live Server extension in Visual Studio Code.
+
+## Project files
+
+- `index.html` — main game page
+- `classic.html` — alternate/legacy game page
+- `manifest.webmanifest` — web app metadata
+- `sw.js` — service worker
+- `icon-192.png` and `icon-512.png` — app icons
+
+## Compatibility
+
+For the best experience, use an up-to-date desktop or mobile browser with WebGL enabled. On mobile, rotate or resize your device as needed and use the on-screen controls.
+
+## Development status
+
+This README describes the current browser game. Platform-specific integrations, including any third-party game portal SDK, should only be considered complete after they have been added to the game and tested in that platform's environment.
+
+## Credits
+
+Created by **Sahil**.
