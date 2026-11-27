@@ -1525,7 +1525,7 @@ $('wgo').addEventListener('click',afterWelcome);
 window.addEventListener('keydown',function(e){if(e.code==='Enter'&&!$('welcome').classList.contains('hidden'))afterWelcome()});
 function dismissHowto(){lsSet('saffron-coast-howto','1');$('howto').classList.add('hidden');$('start').focus()}
 $('hgot').addEventListener('click',dismissHowto);
-$('hskip').addEventListener('click',function(){dismissHowto();$('start').click()});
+$('hskip').addEventListener('click',function(){$('htutc').checked=false;dismissHowto();$('start').click()});
 $('hcustom').addEventListener('click',function(){openCtlPre()});
 $('mhow').addEventListener('click',function(){$('howto').classList.remove('hidden')});
 $('mctl').addEventListener('click',function(){openCtlPre()});
