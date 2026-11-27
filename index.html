@@ -332,8 +332,8 @@ body.wheelmode #touch .tg:first-child{align-items:flex-end}
       <div class="hsec"><h3>Your goal</h3><p>Drive around Saffron Coast. Take jobs from the orange rings, earn money, then spend it in the Garage on cars, paint and upgrades. Keep an eye on your fuel.</p></div>
       <div class="hsec"><h3>Keyboard</h3>
         <div class="hgrid">
-          <div><span class="kc">W</span> / <span class="kc">↑</span> gas</div><div><span class="kc">S</span> / <span class="kc">↓</span> brake and reverse</div>
-          <div><span class="kc">A</span> <span class="kc">D</span> / <span class="kc">←</span> <span class="kc">→</span> steer</div><div><span class="kc">Space</span> handbrake drift</div>
+          <div><span class="kc">W / Z</span> / <span class="kc">↑</span> gas</div><div><span class="kc">S</span> / <span class="kc">↓</span> brake and reverse</div>
+          <div><span class="kc">A / Q</span> <span class="kc">D</span> / <span class="kc">←</span> <span class="kc">→</span> steer</div><div><span class="kc">Space</span> handbrake drift</div>
           <div><span class="kc">Shift</span> nitro</div><div><span class="kc">B</span> horn</div>
           <div><span class="kc">H</span> headlights</div><div><span class="kc">N</span> full map</div>
           <div><span class="kc">G</span> garage</div><div><span class="kc">C</span> camera view</div>
@@ -350,7 +350,7 @@ body.wheelmode #touch .tg:first-child{align-items:flex-end}
         </ul>
       </div>
       <label id="htutl" for="htutc"><input type="checkbox" id="htutc" checked> Show the step-by-step driving tutorial when I start</label>
-      <div class="btns"><button type="button" id="hcustom">Adjust control buttons</button><button type="button" class="pri" id="hgot">I understand</button></div>
+      <div class="btns"><button type="button" id="hcustom">Adjust controls</button><button type="button" id="hskip">Skip tutorial</button><button type="button" class="pri" id="hgot">Continue</button></div>
     </div>
   </div>
 
@@ -364,8 +364,8 @@ body.wheelmode #touch .tg:first-child{align-items:flex-end}
       <button class="go" id="start" type="button">START DRIVING</button>
       <div class="mrow"><button id="mhow" type="button">How to play</button><button id="mctl" type="button">Adjust controls</button></div>
       <ul class="help">
-        <li><b>W / ↑</b> gas &nbsp; <b>S / ↓</b> brake, reverse</li>
-        <li><b>A D / ← →</b> steer</li>
+        <li><b>W / Z / ↑</b> gas &nbsp; <b>S / ↓</b> brake, reverse</li>
+        <li><b>A / Q, D / ← →</b> steer</li>
         <li><b>Space</b> handbrake drift</li>
         <li><b>P</b> pause &nbsp; <b>M</b> sound &nbsp; <b>C</b> camera</li>
         <li><b>Shift</b> nitro &nbsp; <b>G</b> garage &nbsp; <b>H</b> headlights &nbsp; <b>B</b> horn &nbsp; <b>N</b> map</li>
@@ -1167,16 +1167,14 @@ $('snd').addEventListener('click',function(){setSound(!soundOn)});
 var map={ArrowLeft:'left',KeyA:'left',ArrowRight:'right',KeyD:'right',ArrowUp:'thr',KeyW:'thr',ArrowDown:'brk',KeyS:'brk',Space:'hb',ShiftLeft:'nos',ShiftRight:'nos',KeyB:'horn'};
 window.addEventListener('keydown',function(e){
   if(map[e.code]){keys[map[e.code]]=true;if(S.mode==='play')e.preventDefault()}
-  if(e.code==='Escape'&&(S.mode==='settings'||S.ctlPre)){closeCtl();return}
-  if(e.code==='Escape'&&S.mode==='garage'){closeGar();return}
-  if(e.code==='Escape'&&S.mode==='map'){closeMap();return}
+  // Escape is intentionally left to the browser (for example, to exit fullscreen).
   if(e.code==='KeyN'){if(S.mode==='map')closeMap();else openMap()}
-  if(e.code==='KeyP'||e.code==='Escape')togglePause();
+  if(e.code==='KeyP')togglePause();
   if(e.code==='KeyM')setSound(!soundOn);
   if(e.code==='KeyC')toggleView();
   if(e.code==='KeyH'&&(S.mode==='play'||S.mode==='paused'))toggleLights();
   if(e.code==='KeyG'){if(S.mode==='garage')closeGar();else openGar()}
-  if(S.mode==='dialog'){if(e.code==='Enter')closeDialog(true);if(e.code==='Escape')closeDialog(false)}
+  if(S.mode==='dialog'&&e.code==='Enter')closeDialog(true);
 });
 window.addEventListener('keyup',function(e){if(map[e.code])keys[map[e.code]]=false});
 window.addEventListener('blur',function(){keys={};tk={sa:0}});
@@ -1525,7 +1523,9 @@ function afterWelcome(){
 }
 $('wgo').addEventListener('click',afterWelcome);
 window.addEventListener('keydown',function(e){if(e.code==='Enter'&&!$('welcome').classList.contains('hidden'))afterWelcome()});
-$('hgot').addEventListener('click',function(){lsSet('saffron-coast-howto','1');$('howto').classList.add('hidden');$('start').focus()});
+function dismissHowto(){lsSet('saffron-coast-howto','1');$('howto').classList.add('hidden');$('start').focus()}
+$('hgot').addEventListener('click',dismissHowto);
+$('hskip').addEventListener('click',function(){dismissHowto();$('start').click()});
 $('hcustom').addEventListener('click',function(){openCtlPre()});
 $('mhow').addEventListener('click',function(){$('howto').classList.remove('hidden')});
 $('mctl').addEventListener('click',function(){openCtlPre()});
